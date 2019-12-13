@@ -1,84 +1,87 @@
 import robin_stocks as robin
-
+from util.logger import Logger
 
 class RobinhoodService:
 
-    def __init__(self, username, password):
+    def __init__(self, username, password, mainDirectory):
         self.username = username
         self.password = password
         self.isLogin = False
+        global logger
+        logger = Logger(mainDirectory + '\logs')
 
     def login(self):
         try:
             robin.login(self.username, self.password)
             self.isLogin = True
         except Exception as ex:
-            print('Error logging into account: ' + self.username)
+            logger.logError('Error logging into account: ' + self.username)
         else:
-            print('Successfully logged into account: ' + self.username)
+            logger.logInfo('Successfully logged into account: ' + self.username)
 
     def listStocksInAccount(self):
         if not self.isLogin:
-            print('Please log in before listing stocks in the account.')
+            logger.logInfo('Please log in before listing stocks in the account.')
             return
         myStocks = robin.build_holdings()
         if len(myStocks.items()) == 0:
-            print('This account hold 0 stocks.')
+            logger.logInfo('This account hold 0 stocks.')
         else:
-            print('Listing stocks:')
+            logger.logInfo('Listing stocks:')
         for key, value in myStocks.items():
-            print(key, value)
+            logger.logInfo(key, value)
 
-    def buyMarket(self, stock, quantity):
+    def marketBuy(self, stock, quantity):
         # submit a purchase order at market price
         try:
-            robin.order_buy_market(stock, quantity)
+            response = robin.order_buy_market(stock, quantity)
+            #TODO: look up what response contains and get the exact order price and log it out. same for other methods
         except Exception as ex:
-            print('Unable to purchase %s with market buy. \nError: %s ' % (stock,  ex))
+            logger.logError('Unable to purchase %s with market buy. \nError: %s ' % (stock,  ex))
         else:
-            print('Successfully purchased %i shares of %s with market buy' % (quantity, stock))
+            logger.logInfo('Successfully purchased %i shares of %s with market buy' % (quantity, stock))
 
-    def buyStopLimit(self, stock, quantity, limitPrice, stopPrice):
+    def stopLimitBuy(self, stock, quantity, limitPrice, stopPrice):
         # submit a stop order to be turned into a limit order once a certain stop price is reached
         try:
             robin.order_buy_stop_limit(stock, quantity, limitPrice, stopPrice)
         except Exception as ex:
-            print('Unable to purchase %s with stop limit buy. \nError: %s' % (stock, ex))
+            logger.logError('Unable to purchase %s with stop limit buy. \nError: %s' % (stock, ex))
         else:
-            print('Successfully purchased %i shares of %s with stop limit buy' % (quantity, stock))
+            logger.logInfo('Successfully purchased %i shares of %s with stop limit buy' % (quantity, stock))
 
-    def buyStopLoss(self, stock, quantity, stopPrice):
+    def stopLossBuy(self, stock, quantity, stopPrice):
         # submit a stop order to be turned into a market order once a certain stop price is reached.
         try:
             robin.order_buy_stop_loss(stock, quantity, stopPrice)
         except Exception as ex:
-            print('Unable to purchase %s with stop loss buy. \nError: %s' % (stock, ex))
+            logger.logError('Unable to purchase %s with stop loss buy. \nError: %s' % (stock, ex))
         else:
-            print('Successfully purchased %i shares of %s with stop loss buy.' % (quantity, stock))
+            logger.logInfo('Successfully purchased %i shares of %s with stop loss buy.' % (quantity, stock))
 
-    def sellMarket(self, stock, quantity):
+    def marketSell(self, stock, quantity):
         # submit a sell order at market price
         try:
             robin.order_sell_market(stock, quantity)
         except Exception as ex:
-            print('Unable to sell %s with market sell. \nError: %s' % (stock, ex))
+            logger.logError('Unable to sell %s with market sell. \nError: %s' % (stock, ex))
         else:
-            print('Successfully purchased %i shares of %s with market sell' % (quantity, stock))
+            logger.logInfo('Successfully purchased %i shares of %s with market sell' % (quantity, stock))
 
-    def sellStopLimit(self, stock, quantity, limitPrice, stopPrice):
+    def stopLimitSell(self, stock, quantity, limitPrice, stopPrice):
         # submit a stop sell order to be turned into a limit order once a certain stop price is reached
         try:
             robin.order_sell_stop_limit(stock, quantity, limitPrice, stopPrice)
         except Exception as ex:
-            print('Unable to sell %s with stop limit sell. \nError: %s' % (stock, ex))
+            logger.logError('Unable to sell %s with stop limit sell. \nError: %s' % (stock, ex))
         else:
-            print('Successfully sold %i shares of %s with stop limit sell.' % (quantity, stock))
+            logger.logError('Successfully sold %i shares of %s with stop limit sell.' % (quantity, stock))
 
-    def sellStopLoss(self, stock, quantity, stopPrice):
+    def stopLossSell(self, stock, quantity, stopPrice):
         # submit a stop sell order to be turned into a market order once a certain stop price is reached.
         try:
             robin.order_sell_stop_loss(stock, quantity, stopPrice)
         except Exception as ex:
-            print('Unable to sell %s with stop loss sell. \nError: %s' % (stock, ex))
+            logger.logError('Unable to sell %s with stop loss sell. \nError: %s' % (stock, ex))
         else:
-            print('Successfully sold %i shares of %s with stop loss sell.' % (quantity, stock))
+            logger.logInfo('Successfully sold %i shares of %s with stop loss sell.' % (quantity, stock))
