@@ -4,6 +4,8 @@ src/config/config.py
 #test files
 MyTestFile.py
 
+#vscode files
+.vscode
 #pycharm files
 .idea
 
