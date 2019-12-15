@@ -1,6 +1,9 @@
 #config file
 src/config/config.py
 
+#test files
+MyTestFile.py
+
 #pycharm files
 .idea
 
@@ -62,6 +65,7 @@ coverage.xml
 *.pot
 
 # Django stuff:
+*.log
 src/logs/*
 local_settings.py
 db.sqlite3
