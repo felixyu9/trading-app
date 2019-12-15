@@ -1,5 +1,0 @@
-2019-12-13 17:40:57,809 [D:\trading-app\src\util\logger.py:25] [INFO] - Successfully logged into account: felix.j.yu@gmail.com
-2019-12-13 17:44:29,121 [D:\trading-app\src\util\logger.py:25] [INFO] - Successfully logged into account: felix.j.yu@gmail.com
-2019-12-13 17:44:29,347 [D:\trading-app\src\util\logger.py:25] [INFO] - This account hold 0 stocks.
-2019-12-14 20:11:53,244 [D:\huang\OneDrive - Leland Stanford Junior University\programing\trading-app\src\util\logger.py:31] [ERROR] - Error logging into account: test
-2019-12-14 20:11:53,246 [D:\huang\OneDrive - Leland Stanford Junior University\programing\trading-app\src\util\logger.py:25] [INFO] - Please log in before listing stocks in the account.

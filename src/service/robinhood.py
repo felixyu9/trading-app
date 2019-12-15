@@ -29,7 +29,7 @@ class RobinhoodService:
         else:
             logger.logInfo('Listing stocks:')
         for key, value in myStocks.items():
-            logger.logInfo(key, value)
+            logger.logInfo(str(key) + ':' + str(value))
 
     def marketBuy(self, stock, quantity):
         # submit a purchase order at market price
