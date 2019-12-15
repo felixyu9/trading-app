@@ -31,7 +31,7 @@ class DataProcessor:
                     historicalData = historicalData.append(tempData)
                     date = date - timedelta(days=1)
                 logger.logInfo('Saving data for: ' + stock)
-                fileName = '%s\%s_%i_days_ended_at_%s.csv' %(resourcesDirectory, stock, daysback, str(endDate.date()))
+                fileName = '%s\%s_%i_days_ended_on_%s.csv' %(resourcesDirectory, stock, daysback, str(endDate.date()))
                 historicalData.to_csv(fileName)
                 # TODO: call the uploadDataToS3() method
                 logger.logInfo('Data for ' + stock + ' is saved in ' + fileName)
