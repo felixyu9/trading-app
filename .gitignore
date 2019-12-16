@@ -3,6 +3,7 @@ src/config/config.py
 
 #test files
 MyTestFile.py
+*_test.py
 
 #vscode files
 .vscode
