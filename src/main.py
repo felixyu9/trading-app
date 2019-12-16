@@ -8,8 +8,8 @@ mainDirectory = str(os.path.abspath(os.path.dirname(__file__)))
 
 def main():
     # testRobinhoodStuff()
-    # testDataExtractionStuff()
-    testTrendStuff()
+    testDataExtractionStuff()
+    # testTrendStuff()
     
 def testRobinhoodStuff():
     robinhoodService = RobinhoodService(config.USERNAME, config.PASSWORD, mainDirectory)
@@ -18,7 +18,7 @@ def testRobinhoodStuff():
 
 def testDataExtractionStuff():
     dataProcessor = DataProcessor(mainDirectory)
-    dataProcessor.extractStockHistoricalData(['TSLA', 'AAPL'], datetime(2019, 12, 13), 90)
+    dataProcessor.extractStockHistoricalData(['TSLA', 'AAPL'], datetime.now(), 90)
 
 def testTrendStuff():
     dataProcessor = DataProcessor(mainDirectory)
