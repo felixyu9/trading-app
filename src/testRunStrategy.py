@@ -34,7 +34,7 @@ for i in range(300):
     elif action == 'sell':
         if position > 0:
             fund += currentPrice
-            position -+ 1
+            position -= 1
             
 #    print(position)
     
