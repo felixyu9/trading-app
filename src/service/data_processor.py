@@ -12,8 +12,8 @@ class DataProcessor:
         os.environ['IEX_TOKEN'] = config.IEX_TOKEN
         global logger
         logger = Logger(os.path.join(mainDirectory, 'logs'))
-        global resourcesDirectory
-        resourcesDirectory = os.path.join(mainDirectory, 'resources','historical_data')
+        global historicalDataDirectory
+        historicalDataDirectory = os.path.join(mainDirectory, 'resources','historical_data')
 
     def extractStockHistoricalData(self, stocks, endDate, daysback):
         #extract minute stock data for a period of time. parameter stocks is a list of stock symbols
@@ -32,7 +32,7 @@ class DataProcessor:
                     historicalData = historicalData.append(tempData)
                     date = date - timedelta(days=1)
                 logger.logInfo('Saving data for: ' + stock)
-                fileName = '%s\%s_%i_days_ended_on_%s.csv' %(resourcesDirectory, stock, daysback, str(endDate.date()))
+                fileName = '%s\%s_%i_days_ended_on_%s.csv' %(historicalDataDirectory, stock, daysback, str(endDate.date()))
                 historicalData.to_csv(fileName)
                 # TODO: call the uploadDataToS3() method
                 logger.logInfo('Data for ' + stock + ' is saved in ' + fileName)
@@ -48,8 +48,8 @@ class DataProcessor:
     def getAllUpwardTrendStocks(self):
         #get all the stocks in the resources folder that are upward trended
         upwardStocks = []
-        for path in os.listdir(resourcesDirectory):
-            fullPath = os.path.join(resourcesDirectory, path)
+        for path in os.listdir(historicalDataDirectory):
+            fullPath = os.path.join(historicalDataDirectory, path)
             if os.path.isfile(fullPath):
                 if self.stockTrendIsUpward(fullPath):
                     upwardStocks.append(path.split('_')[0])
