@@ -1,6 +1,7 @@
 # http://www.robin-stocks.com/en/latest/functions.html
 import robin_stocks as robin
 from util.logger import Logger
+import os
 
 class RobinhoodService:
 
@@ -9,7 +10,7 @@ class RobinhoodService:
         self.password = password
         self.isLogin = False
         global logger
-        logger = Logger(mainDirectory + '\logs')
+        logger = Logger(os.path.join(mainDirectory, 'logs'))
 
     def login(self):
         try:
