@@ -20,8 +20,8 @@ class simple:
     def historyHigh(self, n, currentTime):
         # return n min of historyHigh given current time
         currentIndex = self.data[self.data.time == str(currentTime)].index.tolist()[0]
-        return self.data['high'].iloc[currentIndex-10 : currentIndex]
+        return self.data['high'].iloc[currentIndex-n : currentIndex]
     
     def historyLow(self, n, currentTime):
         currentIndex = self.data[self.data.time == str(currentTime)].index.tolist()[0]
-        return self.data['low'].iloc[currentIndex-10 : currentIndex]
+        return self.data['low'].iloc[currentIndex-n : currentIndex]
