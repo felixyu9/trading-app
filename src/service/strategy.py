@@ -9,19 +9,19 @@ class simple:
         self.data = data
         return
         
-    def result(self, n, currentPrice, currentTime):
-        if currentPrice < self.historyLow(n, currentTime).min():
+    def result(self, min, currentPrice, currentTime):
+        if currentPrice < self.historyLow(min, currentTime).min():
             return 'buy'
-        elif currentPrice > self.historyHigh(n, currentTime).max():
+        elif currentPrice > self.historyHigh(min, currentTime).max():
             return 'sell'
         else:
             return 'hold'
     
-    def historyHigh(self, n, currentTime):
-        # return n min of historyHigh given current time
+    def historyHigh(self, min, currentTime):
+        # return min minutes of historyHigh given currentTime
         currentIndex = self.data[self.data.time == str(currentTime)].index.tolist()[0]
-        return self.data['high'].iloc[currentIndex-n : currentIndex]
+        return self.data['high'].iloc[currentIndex-min : currentIndex]
     
-    def historyLow(self, n, currentTime):
+    def historyLow(self, min, currentTime):
         currentIndex = self.data[self.data.time == str(currentTime)].index.tolist()[0]
-        return self.data['low'].iloc[currentIndex-n : currentIndex]
+        return self.data['low'].iloc[currentIndex-min : currentIndex]
