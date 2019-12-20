@@ -39,7 +39,7 @@ class RobinhoodService:
             response = robin.order_buy_market(stock, quantity)
             #TODO: look up what response contains and get the exact order price and log it out. same for other methods
         except Exception as ex:
-            logger.logError('Unable to purchase %s with market buy. \nError: %s ' % (stock,  ex))
+            logger.logError('Unable to purchase %s with market buy. \nError: %s ' % (stock,  str(ex)))
         else:
             logger.logInfo('Successfully purchased %i shares of %s with market buy' % (quantity, stock))
 
@@ -48,7 +48,7 @@ class RobinhoodService:
         try:
             robin.order_buy_stop_limit(stock, quantity, limitPrice, stopPrice)
         except Exception as ex:
-            logger.logError('Unable to purchase %s with stop limit buy. \nError: %s' % (stock, ex))
+            logger.logError('Unable to purchase %s with stop limit buy. \nError: %s' % (stock, str(ex)))
         else:
             logger.logInfo('Successfully purchased %i shares of %s with stop limit buy' % (quantity, stock))
 
@@ -57,7 +57,7 @@ class RobinhoodService:
         try:
             robin.order_buy_stop_loss(stock, quantity, stopPrice)
         except Exception as ex:
-            logger.logError('Unable to purchase %s with stop loss buy. \nError: %s' % (stock, ex))
+            logger.logError('Unable to purchase %s with stop loss buy. \nError: %s' % (stock, str(ex)))
         else:
             logger.logInfo('Successfully purchased %i shares of %s with stop loss buy.' % (quantity, stock))
 
@@ -66,7 +66,7 @@ class RobinhoodService:
         try:
             robin.order_sell_market(stock, quantity)
         except Exception as ex:
-            logger.logError('Unable to sell %s with market sell. \nError: %s' % (stock, ex))
+            logger.logError('Unable to sell %s with market sell. \nError: %s' % (stock, str(ex)))
         else:
             logger.logInfo('Successfully purchased %i shares of %s with market sell' % (quantity, stock))
 
@@ -75,15 +75,15 @@ class RobinhoodService:
         try:
             robin.order_sell_stop_limit(stock, quantity, limitPrice, stopPrice)
         except Exception as ex:
-            logger.logError('Unable to sell %s with stop limit sell. \nError: %s' % (stock, ex))
+            logger.logError('Unable to sell %s with stop limit sell. \nError: %s' % (stock, str(ex)))
         else:
-            logger.logError('Successfully sold %i shares of %s with stop limit sell.' % (quantity, stock))
+            logger.logInfo('Successfully sold %i shares of %s with stop limit sell.' % (quantity, stock))
 
     def stopLossSell(self, stock, quantity, stopPrice):
         # submit a stop sell order to be turned into a market order once a certain stop price is reached.
         try:
             robin.order_sell_stop_loss(stock, quantity, stopPrice)
         except Exception as ex:
-            logger.logError('Unable to sell %s with stop loss sell. \nError: %s' % (stock, ex))
+            logger.logError('Unable to sell %s with stop loss sell. \nError: %s' % (stock, str(ex)))
         else:
             logger.logInfo('Successfully sold %i shares of %s with stop loss sell.' % (quantity, stock))

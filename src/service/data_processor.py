@@ -19,25 +19,28 @@ class DataProcessor:
         #extract minute stock data for a period of time. parameter stocks is a list of stock symbols
         try:
             for stock in stocks:
-                date = endDate
+                today = datetime.now()
+                date = endDate - timedelta(days=daysback)
                 logger.logInfo('Getting data for: ' + stock)
                 historicalData = pd.DataFrame()
                 for i in range(daysback):
+                    if date > today:
+                        break
                     if i == 0:
                         historicalData = get_historical_intraday(stock, date, output_format='pandas')
-                        date = date - timedelta(days=1)    
+                        date = date + timedelta(days=1)    
                         continue
 
                     tempData = get_historical_intraday(stock, date, output_format='pandas')
                     historicalData = historicalData.append(tempData)
-                    date = date - timedelta(days=1)
+                    date = date + timedelta(days=1)
                 logger.logInfo('Saving data for: ' + stock)
                 fileName = '%s\%s_%i_days_ended_on_%s.csv' %(historicalDataDirectory, stock, daysback, str(endDate.date()))
                 historicalData.to_csv(fileName)
                 # TODO: call the uploadDataToS3() method
                 logger.logInfo('Data for ' + stock + ' is saved in ' + fileName)
         except Exception as ex:
-            logger.logError('Error extracting stock data. Error: ' + ex)
+            logger.logError('Error extracting stock data. Error: ' + str(ex))
 
     def uploadDataToS3(self):
         # TODO: update the data to aws s3 bucket
